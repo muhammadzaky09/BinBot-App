@@ -88,6 +88,21 @@ class _LoginState extends State<Login> {
                   ),
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text('Does not have account?'),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signup');
+                    },
+                    child: const Text(
+                      'Sign Up',
+                      style: TextStyle(fontSize: 16, color: Colors.blue),
+                    ),
+                  )
+                ],
+              )
             ],
           ),
         )
