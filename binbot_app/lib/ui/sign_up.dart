@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:binbot_app/network/signUpMethod.dart';
+import 'package:binbot_app/network/sign_up_method.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});

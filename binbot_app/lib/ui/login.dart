@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:binbot_app/network/signInMethod.dart';
+import 'package:binbot_app/network/sign_in_method.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

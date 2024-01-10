@@ -88,6 +88,9 @@ flutter:
     - family: LatoBold
       fonts:
         - asset: fonts\Lato-Bold.ttf
+    - family: Bricolage Grotesque
+      fonts:
+        - asset: fonts\BricolageGrotesque-SemiBold.ttf
   #    
   #
   # For details regarding fonts from package dependencies,

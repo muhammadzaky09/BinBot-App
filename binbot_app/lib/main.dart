@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:binbot_app/ui/login.dart';
 import 'package:binbot_app/ui/homepage.dart';
-import 'package:binbot_app/ui/signup.dart';
-import 'package:binbot_app/network/authPage.dart';
+import 'package:binbot_app/ui/sign_up.dart';
+import 'package:binbot_app/network/auth_method.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
