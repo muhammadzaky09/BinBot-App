@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:binbot_app/network/signInMethod.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -8,6 +10,15 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    super.dispose();
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -34,6 +45,7 @@ class _LoginState extends State<Login> {
                 width: 350,
                 padding: const EdgeInsets.all(10),
                 child: TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -50,6 +62,7 @@ class _LoginState extends State<Login> {
                 width: 350,
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 child: TextField(
+                  controller: passwordController,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -79,8 +92,29 @@ class _LoginState extends State<Login> {
                     borderRadius: BorderRadius.circular(20)),
                 child: TextButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //     context, MaterialPageRoute(builder: (_) => HomePage()));
+                    if (!RegExp(r'\S+@\S+\.\S+')
+                        .hasMatch(emailController.text)) {
+                      // Show email validation error
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text('Please enter a valid email'),
+                            backgroundColor: Colors.red),
+                      );
+                    } else if (passwordController.text.length < 6) {
+                      // Show password validation error
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content:
+                                Text('Password must be at least 6 characters'),
+                            backgroundColor: Colors.red),
+                      );
+                    } else {
+                      SignInMethod(
+                              emailAddress: emailController.text,
+                              password: passwordController.text,
+                              context: context)
+                          .SignIn();
+                    }
                   },
                   child: const Text(
                     'Login',

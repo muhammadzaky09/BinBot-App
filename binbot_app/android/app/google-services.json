@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "567222871872",
+    "project_id": "binbot-model",
+    "storage_bucket": "binbot-model.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:567222871872:android:a8706863ea5b745b6c3ca5",
+        "android_client_info": {
+          "package_name": "com.example.binbot_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAodAYSoNAoxw8hOGtWVj3ttZ3sGSAIbTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

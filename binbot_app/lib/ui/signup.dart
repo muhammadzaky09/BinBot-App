@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:binbot_app/network/signUpMethod.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -8,6 +9,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
@@ -29,26 +32,47 @@ class _SignUpState extends State<SignUp> {
       body: Column(children: <Widget>[
         const SizedBox(height: 20),
         const SizedBox(height: 20),
+        // ignore: sized_box_for_whitespace
         Container(
           width: 350,
-          child: const TextField(
-            decoration: InputDecoration(
+          child: TextField(
+            controller: nameController,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              ),
+              labelText: 'Name',
+              hintText: 'Enter your Name',
+              prefixIcon: Icon(Icons.person),
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        // email
+        Container(
+          width: 350,
+          child: TextField(
+            controller: emailController,
+            decoration: const InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
               ),
               labelText: 'Email',
               hintText: 'Enter your email',
-              prefixIcon: const Icon(Icons.email),
+              prefixIcon: Icon(Icons.email),
             ),
           ),
         ),
         const SizedBox(height: 20),
+        // ignore: sized_box_for_whitespace
+
         Container(
           width: 350,
           child: TextField(
             controller: passwordController,
+            // ignore: prefer_const_constructors
             decoration: InputDecoration(
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
               ),
               labelText: 'Password',
@@ -58,36 +82,57 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
         const SizedBox(height: 20),
+        // ignore: sized_box_for_whitespace
         Container(
           width: 350,
           child: TextField(
             controller: confirmPasswordController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
               ),
               labelText: 'Confirm Password',
               hintText: 'Confirm your password',
-              prefixIcon: const Icon(Icons.lock),
+              prefixIcon: Icon(Icons.lock),
             ),
           ),
         ),
         const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
-            if (passwordController.text == confirmPasswordController.text) {
-              // Proceed with the sign-up process
-            } else {
-              // Show a warning message
+            if (!RegExp(r'\S+@\S+\.\S+').hasMatch(emailController.text)) {
+              // Show email validation error
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Passwords do not match'),
-                  backgroundColor: Colors.red,
-                ),
+                const SnackBar(
+                    content: Text('Please enter a valid email'),
+                    backgroundColor: Colors.red),
               );
+            } else if (passwordController.text.length < 6) {
+              // Show password length error
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                    content:
+                        Text('Password should be at least 6 characters long'),
+                    backgroundColor: Colors.red),
+              );
+            } else if (passwordController.text !=
+                confirmPasswordController.text) {
+              // Show password match error
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                    content: Text('Passwords do not match'),
+                    backgroundColor: Colors.red),
+              );
+            } else {
+              // Proceed with the sign-up process
+              SignUpMethod(
+                emailAddress: emailController.text,
+                password: passwordController.text,
+                name: nameController.text,
+                context: context,
+              ).SignUp();
             }
           },
-          child: const Text('Sign Up'),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.green[700],
             foregroundColor: Colors.white,
@@ -95,6 +140,7 @@ class _SignUpState extends State<SignUp> {
               borderRadius: BorderRadius.circular(30.0),
             ),
           ),
+          child: const Text('Sign Up'),
         ),
         const SizedBox(height: 20),
         Row(
