@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:binbot_app/ui/login.dart';
-import 'package:binbot_app/ui/homepage.dart';
 import 'package:binbot_app/ui/sign_up.dart';
+import 'package:binbot_app/main_navigation.dart';
 import 'package:binbot_app/network/auth_method.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -12,13 +12,24 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MaterialApp(
-    initialRoute: '/',
-    routes: {
-      '/': (context) => const AuthPage(),
-      '/login': (context) => const Login(),
-      '/home': (context) => const Home(),
-      '/signup': (context) => const SignUp(),
-    },
-  ));
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const AuthPage(),
+        '/login': (context) => const Login(),
+        '/main': (context) => const Main(),
+        '/signup': (context) => const SignUp(),
+      },
+    );
+  }
 }

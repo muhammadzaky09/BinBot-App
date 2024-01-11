@@ -14,6 +14,7 @@ class SignInMethod {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: emailAddress, password: password);
+      Navigator.pushReplacementNamed(context, '/main');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
