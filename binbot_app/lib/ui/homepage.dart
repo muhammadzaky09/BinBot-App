@@ -83,25 +83,13 @@ class _HomeState extends State<Home> {
                 )),
           ),
         ]),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(18, 20, 0, 0),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Linked devices',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'RobotoBold',
-                  fontSize: 22.0,
-                )),
-            const SizedBox(height: 10),
-            Device(deviceName: '2023 BinBot Smart Trash Can')
-          ]),
-        )
+        CustomExpansionTile()
       ],
     );
   }
 }
 
+// amount of waste sorted in hero
 class SortedWaste extends StatelessWidget {
   double sortedWaste;
   SortedWaste({
@@ -120,6 +108,7 @@ class SortedWaste extends StatelessWidget {
   }
 }
 
+// list of binbot devices
 class Device extends StatefulWidget {
   final String deviceName;
 
@@ -146,6 +135,68 @@ class _DeviceState extends State<Device> {
               fontSize: 18.0,
             )),
       ],
+    );
+  }
+}
+
+// accordion
+class CustomExpansionTile extends StatefulWidget {
+  const CustomExpansionTile({Key? key}) : super(key: key);
+
+  @override
+  State<CustomExpansionTile> createState() => _CustomExpansionTileState();
+}
+
+class _CustomExpansionTileState extends State<CustomExpansionTile> {
+  bool isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(18, 20, 18, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InkWell(
+            onTap: () => setState(() => isExpanded = !isExpanded),
+            child: Row(
+              mainAxisSize:
+                  MainAxisSize.min, // Use the minimum space for the Row
+              children: [
+                Text(
+                  'Linked devices',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'RobotoBold',
+                    fontSize: 22.0,
+                  ),
+                ),
+                Icon(
+                  isExpanded ? Icons.arrow_drop_down : Icons.arrow_right,
+                  color: Colors.black, // Arrow icon color
+                ),
+              ],
+            ),
+          ),
+          AnimatedCrossFade(
+            firstChild:
+                Container(), // Empty container for collapsed state (firstChild)
+            secondChild: Column(
+              // The actual content for expanded state (secondChild)
+              children: [
+                Device(deviceName: '2023 BinBot Smart Trash Can'),
+                Device(deviceName: '2023 BinBot Smart Trash Can'),
+                Device(deviceName: '2023 BinBot Smart Trash Can'),
+                // Add more Device widgets if you have multiple devices
+              ],
+            ),
+            crossFadeState: isExpanded
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            duration: Duration(milliseconds: 200), // Animation duration
+          ),
+        ],
+      ),
     );
   }
 }
