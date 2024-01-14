@@ -24,6 +24,30 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(16.0), // Add padding around the button
+          child: ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white, // Background color
+              foregroundColor: Colors.black, // Text and icon color
+              elevation: 4.0, // Shadow elevation
+              minimumSize: Size(350, 60), // Width and Height of the button
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30), // Rounded corners
+              ),
+              shadowColor: Colors.grey, // Shadow color
+              // Add padding between the icon and the text
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              // Increase the icon size
+            ),
+            onPressed: () {
+              // Your onPressed function here
+            },
+            icon: const Icon(Icons.person), // Profile icon
+            label: const Text('Profile'), // Button text
+          ),
+        ),
+        const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
             SignOut(context: context).signOutMethod();

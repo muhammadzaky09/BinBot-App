@@ -9,8 +9,7 @@ class Home extends StatefulWidget {
     return AppBar(
       elevation: 0.0,
       backgroundColor: const Color.fromARGB(225, 219, 243, 246),
-      title: Text(
-          'Hello, ${(FirebaseAuth.instance.currentUser?.email)?.split('@')[0]}',
+      title: Text('Hello, ${FirebaseAuth.instance.currentUser?.displayName}',
           style: const TextStyle(color: Color.fromARGB(255, 44, 75, 112))),
       actions: [
         IconButton(
@@ -110,11 +109,13 @@ class SortedWaste extends StatelessWidget {
 
 // list of binbot devices
 class Device extends StatefulWidget {
-  final String deviceName;
+  String deviceName;
+  String deviceLoc = '';
 
   Device({
     Key? key,
     required this.deviceName,
+    // required this.deviceLoc,
   });
 
   @override

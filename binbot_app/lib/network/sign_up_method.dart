@@ -21,7 +21,7 @@ class SignUpMethod {
             password: password,
           )
           .then((result) => {result.user?.updateDisplayName(name)});
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/login');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');

@@ -6,7 +6,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:binbot_app/ui/login.dart';
-import 'package:binbot_app/ui/homepage.dart';
 import 'package:binbot_app/main_navigation.dart';
 
 class AuthPage extends StatelessWidget {
