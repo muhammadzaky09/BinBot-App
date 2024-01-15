@@ -42,6 +42,7 @@ class _SettingsState extends State<Settings> {
             ),
             onPressed: () {
               // Your onPressed function here
+              Navigator.pushNamed(context, '/profile_settings');
             },
             icon: const Icon(Icons.person), // Profile icon
             label: const Text('Profile'), // Button text

@@ -5,6 +5,7 @@ import 'package:binbot_app/ui/homepage.dart';
 import 'package:binbot_app/ui/settings.dart';
 import 'package:binbot_app/ui/wallet.dart';
 import 'package:binbot_app/ui/recycling_center.dart';
+import 'package:binbot_app/ui/profile_settings.dart';
 
 class Main extends StatefulWidget {
   const Main({super.key});

@@ -3,7 +3,7 @@ import 'package:binbot_app/ui/login.dart';
 import 'package:binbot_app/ui/sign_up.dart';
 import 'package:binbot_app/main_navigation.dart';
 import 'package:binbot_app/network/auth_method.dart';
-
+import 'package:binbot_app/ui/profile_settings.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const Login(),
         '/main': (context) => const Main(),
         '/signup': (context) => const SignUp(),
+        '/profile_settings': (context) => const ProfileSettings(),
       },
     );
   }

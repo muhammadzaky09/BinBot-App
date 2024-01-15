@@ -38,6 +38,9 @@ dependencies:
   firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
   google_nav_bar: ^5.0.6
+  image_picker: ^1.0.7
+  firebase_storage: ^11.6.0
+  permission_handler: ^11.1.0
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +69,7 @@ flutter:
     - assets\logo.png
     - assets\background.png
     - assets\bin.png
+    - assets\placeholder.png
   #   
 
   # An image asset can refer to one or more resolution-specific "variants", see
