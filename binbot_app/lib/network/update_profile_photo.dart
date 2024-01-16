@@ -66,12 +66,24 @@ class _UpdateProfilePhotoState extends State<UpdateProfilePhoto> {
   Future<void> _uploadToFirebase(File imageFile) async {
     String userId = FirebaseAuth.instance.currentUser?.uid ?? 'unknown_user';
     try {
+      // Load the image file
+      img.Image? originalImage = img.decodeImage(imageFile.readAsBytesSync());
+
+      // Resize the image (example: width to 600 pixels)
+      img.Image resizedImage = img.copyResize(originalImage!, width: 600);
+
+      // Compress the image (example: JPEG with 70% quality)
+      List<int> resizedBytes = img.encodeJpg(resizedImage, quality: 70);
+
+      // Save the resized image to a temporary file
+      File resizedFile = File(imageFile.path + '_resized.jpg')
+        ..writeAsBytesSync(resizedBytes);
       // Create a unique file name for the image
-      String fileName = 'profile_photo/$userId/profile.png';
+      String fileName = 'profile_photo/$userId/profile.jpg';
 
       // Upload the file to Firebase Storage
       TaskSnapshot snapshot =
-          await _firebaseStorage.ref(fileName).putFile(imageFile);
+          await _firebaseStorage.ref(fileName).putFile(resizedFile);
 
       // When complete, fetch the download URL
       String downloadUrl = await snapshot.ref.getDownloadURL();
@@ -90,7 +102,7 @@ class _UpdateProfilePhotoState extends State<UpdateProfilePhoto> {
   Future<void> _loadProfileImage() async {
     String userId = FirebaseAuth.instance.currentUser?.uid ?? 'unknown_user';
     try {
-      String filePath = 'profile_photo/$userId/profile.png';
+      String filePath = 'profile_photo/$userId/profile.jpg';
       String downloadUrl =
           await _firebaseStorage.ref(filePath).getDownloadURL();
       setState(() {
