@@ -1,16 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:binbot_app/network/firestore_retrieval.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  late double trashAmount;
+
+  Home({super.key});
 
   static PreferredSizeWidget appBar(BuildContext context) {
     return AppBar(
       elevation: 0.0,
       backgroundColor: const Color.fromARGB(225, 219, 243, 246),
       title: Text('Hello, ${FirebaseAuth.instance.currentUser?.displayName}',
-          style: const TextStyle(color: Color.fromARGB(255, 44, 75, 112))),
+          style: const TextStyle(
+            color: Color.fromARGB(255, 44, 75, 112),
+            fontFamily: 'Bricolage Grotesque',
+          )),
       actions: [
         IconButton(
           icon: const Icon(
@@ -55,8 +62,8 @@ class _HomeState extends State<Home> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(18, 25, 0, 0),
-            child: SortedWaste(sortedWaste: 9.42),
+            padding: const EdgeInsets.fromLTRB(18, 25, 0, 0),
+            child: SortedWaste(),
           ),
           const Padding(
             padding: EdgeInsets.fromLTRB(18, 55, 0, 0),
@@ -90,20 +97,31 @@ class _HomeState extends State<Home> {
 
 // amount of waste sorted in hero
 class SortedWaste extends StatelessWidget {
-  double sortedWaste;
-  SortedWaste({
+  const SortedWaste({
     super.key,
-    required this.sortedWaste,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Text(sortedWaste.toString() + ' kg',
-        style: TextStyle(
-          color: Color.fromARGB(255, 44, 75, 112),
-          fontFamily: 'Bricolage Grotesque',
-          fontSize: 28.0,
-        ));
+    return FutureBuilder<double>(
+      future: FirestoreRetrieval().getTotalRecycled(),
+      builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                  Color.fromARGB(255, 44, 75, 112)));
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Text('${snapshot.data} kg',
+              style: TextStyle(
+                color: Color.fromARGB(255, 44, 75, 112),
+                fontFamily: 'Bricolage Grotesque',
+                fontSize: 28.0,
+              ));
+        }
+      },
+    );
   }
 }
 
@@ -143,7 +161,6 @@ class _DeviceState extends State<Device> {
 // accordion
 class CustomExpansionTile extends StatefulWidget {
   const CustomExpansionTile({Key? key}) : super(key: key);
-
   @override
   State<CustomExpansionTile> createState() => _CustomExpansionTileState();
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:binbot_app/network/firestore_retrieval.dart';
 
 class Wallet extends StatefulWidget {
-  const Wallet({super.key});
+  late int recpoints;
+  late double walletAmount;
+  Wallet({super.key});
 
   static PreferredSizeWidget appBar(BuildContext context) {
     return AppBar(
