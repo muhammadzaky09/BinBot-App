@@ -10,6 +10,8 @@ import 'package:image/image.dart' as img;
 // storage and user auth
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+// toast animation
+import 'package:toastification/toastification.dart';
 
 class UpdateProfilePhoto extends StatefulWidget {
   const UpdateProfilePhoto({Key? key}) : super(key: key);
@@ -88,11 +90,23 @@ class _UpdateProfilePhotoState extends State<UpdateProfilePhoto> {
       // When complete, fetch the download URL
       String downloadUrl = await snapshot.ref.getDownloadURL();
 
+      // ignore: use_build_context_synchronously
+      toastification.show(
+        context: context,
+        title: const Text('Profile photo updated!'),
+        type: ToastificationType.success,
+        style: ToastificationStyle.flatColored,
+        autoCloseDuration: const Duration(seconds: 10),
+        icon: const Icon(Icons.check),
+        primaryColor: const Color.fromARGB(84, 222, 132, 167),
+      );
+
       // Update the state with the new image URL
       setState(() {
         _imageURL = downloadUrl; // Update _imageURL with the new URL
       });
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to upload image: $e')),
       );
@@ -109,6 +123,15 @@ class _UpdateProfilePhotoState extends State<UpdateProfilePhoto> {
         _imageURL = downloadUrl;
       });
     } catch (e) {
+      // ignore: use_build_context_synchronously
+      toastification.show(
+        context: context,
+        title: const Text('Failed to load profile photo'),
+        type: ToastificationType.error,
+        style: ToastificationStyle.flatColored,
+        autoCloseDuration: const Duration(seconds: 10),
+        icon: const Icon(Icons.check),
+      );
       // Handle the error, e.g., image not found or permission denied
     }
   }
@@ -121,6 +144,13 @@ class _UpdateProfilePhotoState extends State<UpdateProfilePhoto> {
         radius: 60,
         backgroundColor: Colors.grey.shade200,
         backgroundImage: _imageURL != null ? NetworkImage(_imageURL!) : null,
+        onBackgroundImageError: _imageURL != null
+            ? (exception, stackTrace) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Failed to upload image: $exception')),
+                );
+              }
+            : null,
         child:
             _imageURL == null ? const Icon(Icons.camera_alt, size: 60) : null,
       ),

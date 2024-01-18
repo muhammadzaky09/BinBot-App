@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:binbot_app/network/firestore_retrieval.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 
 class Home extends StatefulWidget {
   late double trashAmount;
@@ -61,8 +60,8 @@ class _HomeState extends State<Home> {
               fit: BoxFit.cover,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(18, 25, 0, 0),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(18, 25, 0, 0),
             child: SortedWaste(),
           ),
           const Padding(
@@ -89,7 +88,7 @@ class _HomeState extends State<Home> {
                 )),
           ),
         ]),
-        CustomExpansionTile()
+        const CustomExpansionTile()
       ],
     );
   }
@@ -107,14 +106,16 @@ class SortedWaste extends StatelessWidget {
       future: FirestoreRetrieval().getTotalRecycled(),
       builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator(
+          return const CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(
                   Color.fromARGB(255, 44, 75, 112)));
         } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                  Color.fromARGB(255, 44, 75, 112)));
         } else {
           return Text('${snapshot.data} kg',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color.fromARGB(255, 44, 75, 112),
                 fontFamily: 'Bricolage Grotesque',
                 fontSize: 28.0,
@@ -181,7 +182,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
               mainAxisSize:
                   MainAxisSize.min, // Use the minimum space for the Row
               children: [
-                Text(
+                const Text(
                   'Linked devices',
                   style: TextStyle(
                     color: Colors.black,
@@ -211,7 +212,7 @@ class _CustomExpansionTileState extends State<CustomExpansionTile> {
             crossFadeState: isExpanded
                 ? CrossFadeState.showSecond
                 : CrossFadeState.showFirst,
-            duration: Duration(milliseconds: 200), // Animation duration
+            duration: const Duration(milliseconds: 200), // Animation duration
           ),
         ],
       ),

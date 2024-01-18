@@ -43,7 +43,8 @@ dependencies:
   permission_handler: ^11.1.0
   image: ^4.1.4
   cloud_firestore: ^4.14.0
-  loading_indicator: ^3.1.1
+  toastification: ^1.2.0
+  
 
 dev_dependencies:
   flutter_test:
