@@ -42,6 +42,9 @@ dependencies:
   firebase_storage: ^11.6.0
   permission_handler: ^11.1.0
   image: ^4.1.4
+  cloud_firestore: ^4.14.0
+  toastification: ^1.2.0
+  
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +74,7 @@ flutter:
     - assets\background.png
     - assets\bin.png
     - assets\placeholder.png
+    - assets\rosidah.png
   #   
 
   # An image asset can refer to one or more resolution-specific "variants", see

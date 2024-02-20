@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ChangeEmail extends StatefulWidget {
@@ -10,6 +11,20 @@ class ChangeEmail extends StatefulWidget {
 class _ChangeEmailState extends State<ChangeEmail> {
   final _formKey = GlobalKey<FormState>();
   String? _email;
+
+  UpdateEmail() async {
+    try {
+      await FirebaseAuth.instance.currentUser!
+          .updateEmail(_email!)
+          .then((value) => ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Email changed successfully')),
+              ));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to change email: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +53,6 @@ class _ChangeEmailState extends State<ChangeEmail> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // TODO: Implement your logic to update the email
-                // Example: Update email in your backend or authentication service
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Email updated successfully')),
-                );
               }
             },
             child: const Text('Change Email'),

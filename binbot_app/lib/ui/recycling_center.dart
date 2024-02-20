@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:binbot_app/ui/recycling_center_card.dart';
 
 class Recycling extends StatefulWidget {
   const Recycling({super.key});
@@ -42,6 +43,25 @@ class Recycling extends StatefulWidget {
 class _RecyclingState extends State<Recycling> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: SingleChildScrollView(
+        // Makes the content scrollable
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Nearby Recycling Centers',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            Expanded(child: CraftsmanshipGrid()),
+          ],
+        ),
+      ),
+    );
   }
 }

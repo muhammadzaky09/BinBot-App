@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+
 // add ui pages here
 import 'package:binbot_app/ui/homepage.dart';
 import 'package:binbot_app/ui/settings.dart';
 import 'package:binbot_app/ui/wallet.dart';
 import 'package:binbot_app/ui/recycling_center.dart';
-import 'package:binbot_app/ui/profile_settings.dart';
 
 class Main extends StatefulWidget {
   const Main({super.key});
@@ -54,7 +54,7 @@ class _MainState extends State<Main> {
       body: PageView(
         controller: _pageController,
         onPageChanged: _onPageSelected,
-        children: const [
+        children: [
           Home(),
           Recycling(),
           Wallet(),

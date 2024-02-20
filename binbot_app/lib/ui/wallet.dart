@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:binbot_app/network/firestore_retrieval.dart';
 
 class Wallet extends StatefulWidget {
-  const Wallet({super.key});
+  Wallet({super.key});
 
   static PreferredSizeWidget appBar(BuildContext context) {
     return AppBar(
@@ -66,7 +67,7 @@ class _WalletState extends State<Wallet> {
                 ),
               ],
             ),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -99,13 +100,36 @@ class WalletAmount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'IDR232.500',
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 28.0,
-        fontWeight: FontWeight.bold,
-      ),
+    return FutureBuilder<double>(
+      future: FirestoreRetrieval().getWalletAmount(),
+      builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                  Color.fromARGB(255, 44, 75, 112)));
+        } else if (snapshot.hasError) {
+          return const Text(
+            'IDR0.00',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 28.0,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        } else if (snapshot.hasData) {
+          return Text(
+            'IDR ${(snapshot.data)?.toInt()}',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 28.0,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        }
+
+        // Add a return statement or throw an exception here
+        return Container(); // Replace with appropriate widget or throw statement
+      },
     );
   }
 }
@@ -117,7 +141,7 @@ class WalletAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       'Waste Bank\nBank Sampah Sleman',
       style: TextStyle(
         color: Colors.white,
@@ -146,20 +170,42 @@ class RecPoints extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5), // Shadow color
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
       child: Row(children: <Widget>[
-        Icon(Icons.pets,
+        const Icon(Icons.pets,
             color: Color(0xFFFE6B8B)), // Replace with appropriate icon
-        SizedBox(width: 4),
-        Text(
-          '56 RecPoints',
-          style: TextStyle(
-            color: Colors.black, // Text color inside the white container
-            fontSize: 16.0,
-          ),
+        const SizedBox(width: 4),
+        FutureBuilder<int>(
+          future: FirestoreRetrieval().getRecpoints(),
+          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Color.fromARGB(255, 44, 75, 112)));
+            } else if (snapshot.hasError) {
+              return const Text(
+                '0',
+                style: TextStyle(
+                  color: Colors.black, // Text color inside the white container
+                  fontSize: 16.0,
+                ),
+              );
+            } else if (snapshot.hasData) {
+              return Text(
+                '${(snapshot.data)} RecPoints',
+                style: const TextStyle(
+                  color: Colors.black, // Text color inside the white container
+                  fontSize: 16.0,
+                ),
+              );
+            }
+
+            // Add a return statement or throw an exception here
+            return Container(); // Replace with appropriate widget or throw statement
+          },
         ),
       ]),
     );
