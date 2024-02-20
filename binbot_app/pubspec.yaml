@@ -74,6 +74,7 @@ flutter:
     - assets\background.png
     - assets\bin.png
     - assets\placeholder.png
+    - assets\rosidah.png
   #   
 
   # An image asset can refer to one or more resolution-specific "variants", see

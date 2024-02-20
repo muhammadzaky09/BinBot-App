@@ -138,22 +138,25 @@ class _UpdateProfilePhotoState extends State<UpdateProfilePhoto> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: _pickImage,
-      child: CircleAvatar(
-        radius: 60,
-        backgroundColor: Colors.grey.shade200,
-        backgroundImage: _imageURL != null ? NetworkImage(_imageURL!) : null,
-        onBackgroundImageError: _imageURL != null
-            ? (exception, stackTrace) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Failed to upload image: $exception')),
-                );
-              }
-            : null,
-        child:
-            _imageURL == null ? const Icon(Icons.camera_alt, size: 60) : null,
+    return Stack(children: <Widget>[
+      GestureDetector(
+        onTap: _pickImage,
+        child: CircleAvatar(
+          radius: 60,
+          backgroundColor: Colors.grey.shade200,
+          backgroundImage: _imageURL != null ? NetworkImage(_imageURL!) : null,
+          onBackgroundImageError: _imageURL != null
+              ? (exception, stackTrace) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                        content: Text('Failed to upload image: $exception')),
+                  );
+                }
+              : null,
+          child:
+              _imageURL == null ? const Icon(Icons.camera_alt, size: 60) : null,
+        ),
       ),
-    );
+    ]);
   }
 }
