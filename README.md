@@ -1,4 +1,4 @@
-# BinBot - Waste Management Analytics App
+# BinBot - Integrated Waste Management System
 
 BinBot is an innovative Android application designed to work with the OrangePi IoT device for effective waste management. It provides analytics about waste bins, facilitating efficient waste sorting and management. Developed using Flutter and Firebase, BinBot is a step towards smarter waste handling and sustainability.
 
