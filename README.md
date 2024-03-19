@@ -1,5 +1,9 @@
 # BinBot - Integrated Waste Management System
 
+
+https://github.com/muhammadzaky09/BinBot-App/assets/88239996/3ba6f70c-226e-4962-9680-7dc3b2945752
+
+
 BinBot is an innovative Waste Management System designed to work with the OrangePi IoT device and Android Flutter Application. It provides analytics about waste bins, facilitating efficient waste sorting and management. Developed using Flutter, Firebase, and TensorFlow, BinBot is a step towards smarter waste handling and sustainability. Utilizing machine learning and computer vision, BinBot can identify different types of waste and suggest the correct bin for disposal. This project aims to tackle *Goal 12: Responsible Consumption and Production* and to streamline waste management as well as support recycling efforts. <br>
 The model is derived from pretrained DenseNet-121 model, a balanced solution between performance and accuracy. During training, the model is able to reach more than 90% in both validation and training accuracy.
 
